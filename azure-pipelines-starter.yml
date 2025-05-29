@@ -11,7 +11,12 @@ trigger:
       - release/*
     exclude:
       - azure*-pipelines.yml
-
+  paths:
+    include:
+      - src/**
+      - tests/**
+    exclude:
+      - azure**
 
 pool:
   vmImage: ubuntu-latest
@@ -35,4 +40,16 @@ stages:
     - script: |
         echo "Restore dependencies..."
       displayName: 'Restore dependencies'
+
+- stage: Test
+  displayName: Unit Tests
+  dependsOn: Build
+  isSkippable: false
+  jobs:
+  - job: TestJob
+    displayName: TestJob
+    steps:
+    - script: |
+        echo "Running unit tests..."
+      displayName: 'Run unit tests'
     
