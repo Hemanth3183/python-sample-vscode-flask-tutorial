@@ -4,17 +4,35 @@
 # https://aka.ms/yaml
 
 trigger:
-- main
-- develop
+  branches:
+    include:
+      - main
+      - develop
+      - release/*
+    exclude:
+      - azure*-pipelines.yml
+
 
 pool:
   vmImage: ubuntu-latest
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+stages:
+- stage: Build
+  displayName: Build and push image
+  jobs:
+  - job: Build
+    displayName: Build
+    steps:
+    - script: |
+        echo "Building the Docker image..."
+      displayName: 'Build Docker image'
+    - script: |
+        echo "Pushing the Docker image..."
+      displayName: 'Push Docker image'
+    - script: |
+        echo "Running tests..."
+      displayName: 'Run tests'
+    - script: |
+        echo "Restore dependencies..."
+      displayName: 'Restore dependencies'
+    

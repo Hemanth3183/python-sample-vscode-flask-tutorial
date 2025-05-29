@@ -3,13 +3,13 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/docker
 
 trigger:
- branches:
-   include:
-     - main
-     - develop
-     - release/*
-   exclude:
-     - azure*
+  branches:
+    include:
+      - main
+      - develop
+      - release/*
+    exclude:
+      - azure*-pipelines.yml   
 
 resources:
 - repo: self
